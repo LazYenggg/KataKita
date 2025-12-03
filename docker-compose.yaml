@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  web:
+    container_name: web-server-kelompok
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - jaringan-kita
+
+  db:
+    container_name: db-server-kelompok
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: db_kolaborasi
+      MYSQL_USER: user_kelompok
+      MYSQL_PASSWORD: user123
+    volumes:
+      - data_mysql:/var/lib/mysql
+    networks:
+      - jaringan-kita
+
+networks:
+  jaringan-kita:
+    driver: bridge
+
+volumes:
+  data_mysql:
